@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pet.dao.PetDAO">
+    <cache/>
+
+    <select id="selectPet" parameterType="int" resultType="Pet">
+        SELECT
+          *
+        FROM PET
+        WHERE PET.ID = #{id};
+    </select>
+
+    <select id="getAllPets" resultType="Pet">
+        SELECT
+          *
+        FROM PET
+    </select>
+
+    <insert id="addPet" parameterType="Pet" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO PET
+          (NAME)
+        VALUES
+          (#{name})
+    </insert>
+
+    <update id="updatePet" parameterType="Pet">
+        UPDATE PET SET
+          NAME = #{name}
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="deletePet" parameterType="Pet">
+        DELETE FROM PET
+        WHERE ID = #{id}
+    </delete>
+
+</mapper>

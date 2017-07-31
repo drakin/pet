@@ -1,0 +1,11 @@
+.icon-add {
+    background-image:
+            url(http://examples.sencha.com/extjs/6.5.0/examples/classic/restful/images/add.png)
+    !important;
+}
+
+.icon-delete {
+    background-image:
+            url(http://examples.sencha.com/extjs/6.5.0/examples/classic/restful/images/delete.png)
+    !important;
+}
