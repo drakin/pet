@@ -13,7 +13,7 @@ public class Pet implements Serializable {
 
     private String photoUrl;
 
-    @JsonFormat(pattern = "dd.MM.yyyy")
+    @JsonFormat(pattern = "dd.MM.yyyy", timezone = "Europe/Moscow")
     private Date birthDay;
 
     private float price;

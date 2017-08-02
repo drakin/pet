@@ -29,8 +29,9 @@ public class PetService {
     }
 
     @Transactional
-    public void updatePet(Pet pet) {
+    public Pet updatePet(Pet pet) {
         petDAO.updatePet(pet);
+        return petDAO.selectPet(pet.getId());
     }
 
     @Transactional

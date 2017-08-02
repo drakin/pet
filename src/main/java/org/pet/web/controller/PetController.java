@@ -58,8 +58,8 @@ public class PetController {
     public Map<String, ?> update(@PathVariable("id") Integer id, @RequestBody PetRequestWrapper data) throws Exception {
         try {
             data.getData().setId(id);
-            petService.updatePet(data.getData());
-            return Util.getMap(Collections.singletonList(data.getData()));
+            Pet pet = petService.updatePet(data.getData());
+            return Util.getMap(Collections.singletonList(pet));
 
         } catch (Exception e) {
 

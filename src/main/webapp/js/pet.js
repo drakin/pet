@@ -6,13 +6,20 @@ Ext.onReady(function () {
         } else {
             owner = {
                 id: record.data.ownerId,
-                name: record.data.ownerName
+                name: record.data.ownerName,
+                photoUrl: record.data.ownerPhotoUrl
             }
+        }
+        var birthDay = null;
+
+        if (record.data.birthDay){
+            birthDay = record.data.birthDay.format('d.m.Y');
         }
         return {
             id: record.data.id,
             name: record.data.name,
             photoUrl: record.data.photoUrl,
+            birthDay: birthDay,
             price: record.data.price,
             owner: owner
         }
@@ -27,6 +34,10 @@ Ext.onReady(function () {
         }, {
             name: 'photoUrl',
             type: 'string'
+        }, {
+            name: 'birthDay',
+            type: 'date',
+            dateFormat: 'd.m.Y'
         }, {
             name: 'price',
             type: 'double'
@@ -144,6 +155,20 @@ Ext.onReady(function () {
                     xtype: 'textfield'
                 }
             }, {
+                header: "Birth Day",
+                dataIndex: 'birthDay',
+                sortable: true,
+                type: 'date',
+                css: "vertical-align: middle;",
+                align: "center",
+                width: 100,
+                renderer: Ext.util.Format.dateRenderer('d.m.Y'),
+                editor: {
+                    xtype: 'datefield',
+                    format: 'd.m.Y'
+                }
+            },
+            {
                 header: "PRICE",
                 width: 170,
                 sortable: true,
@@ -152,7 +177,7 @@ Ext.onReady(function () {
                 renderer: Ext.util.Format.usMoney,
                 align: "center",
                 editor: {
-                    xtype: 'textfield'
+                    xtype: 'numberfield'
                 }
             }, {
                 header: "OWNER",
