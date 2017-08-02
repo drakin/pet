@@ -6,29 +6,66 @@
 <mapper namespace="org.pet.dao.PetDAO">
     <cache/>
 
-    <select id="selectPet" parameterType="int" resultType="Pet">
+    <resultMap id="detailedPet" type="Pet">
+        <id property="id" column="PET_ID"/>
+        <result property="name" column="PET_NAME"/>
+        <result property="photoUrl" column="PET_PHOTO_URL"/>
+        <result property="birthDay" column="BIRTH_DAY"/>
+        <result property="price" column="PRICE"/>
+
+        <association property="owner" column="OWNER_ID"
+                     javaType="Owner">
+            <id property="id" column="OWNER_ID"/>
+            <result property="name" column="OWNER_NAME"/>
+            <result property="photoUrl" column="OWNER_PHOTO_URL"/>
+        </association>
+    </resultMap>
+
+    <select id="selectPet" parameterType="int" resultMap="detailedPet">
         SELECT
-          *
+          PET.ID AS PET_ID,
+          PET.NAME AS PET_NAME,
+          PET.PHOTO_URL AS PET_PHOTO_URL,
+          BIRTH_DAY,
+          PRICE,
+          OWNER_ID,
+          OWNER.NAME AS OWNER_NAME,
+          OWNER.PHOTO_URL AS OWNER_PHOTO_URL
         FROM PET
+        LEFT JOIN OWNER ON PET.OWNER_ID = OWNER.ID
         WHERE PET.ID = #{id};
     </select>
 
-    <select id="getAllPets" resultType="Pet">
+    <select id="getAllPets" resultType="Pet" resultMap="detailedPet">
         SELECT
-          *
+          PET.ID AS PET_ID,
+          PET.NAME AS PET_NAME,
+          PET.PHOTO_URL AS PET_PHOTO_URL,
+          BIRTH_DAY,
+          PRICE,
+          OWNER_ID,
+          OWNER.NAME AS OWNER_NAME,
+          OWNER.PHOTO_URL AS OWNER_PHOTO_URL
         FROM PET
+        LEFT JOIN OWNER ON PET.OWNER_ID = OWNER.ID
     </select>
 
     <insert id="addPet" parameterType="Pet" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO PET
-          (NAME)
+          (NAME,PHOTO_URL,BIRTH_DAY,PRICE)
         VALUES
-          (#{name})
+          (#{name},#{photoUrl},#{birthDay},#{price})
     </insert>
 
     <update id="updatePet" parameterType="Pet">
         UPDATE PET SET
-          NAME = #{name}
+          NAME = #{name},
+          PHOTO_URL = #{photoUrl},
+          BIRTH_DAY = #{birthDay},
+          PRICE = #{price}
+        <if test="owner != null">
+          ,OWNER_ID = #{owner.id}
+        </if>
         WHERE ID = #{id}
     </update>
 

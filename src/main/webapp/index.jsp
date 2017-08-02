@@ -23,9 +23,11 @@
     <script src="http://cpansearch.perl.org/src/VANSTYN/JavaScript-ExtJS-V3-3.4.11/share/ext-3.4.1/examples/ux/RowEditor.js"></script>
 
     <!-- App js -->
+    <script src="js/main-panel.js"></script>
+    <script src="js/info.js"></script>
     <script src="js/pet.js"></script>
+
 </head>
 <body>
-    <div id="pet-grid"></div>
 </body>
 </html>

@@ -3,6 +3,7 @@ package org.pet.web.controller;
 import org.pet.model.Pet;
 import org.pet.model.PetRequestWrapper;
 import org.pet.service.PetService;
+import org.pet.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,9 @@ public class PetController {
     public Map<String, ?> view() throws Exception {
         try {
             List<Pet> pets = petService.getAllPets();
-            return getMap(pets);
+            return Util.getMap(pets);
         } catch (Exception e) {
-            return getModelMapError("Error retrieving Pets from database.");
+            return Util.getModelMapError("Error retrieving Pets from database.");
         }
     }
 
@@ -34,9 +35,9 @@ public class PetController {
     public Map<String, ?> viewOne(@PathVariable("id") Integer id) throws Exception {
         try {
             Pet pet = petService.getPetById(id);
-            return getMap(Collections.singletonList(pet));
+            return Util.getMap(Collections.singletonList(pet));
         } catch (Exception e) {
-            return getModelMapError("Error retrieving Pets from database.");
+            return Util.getModelMapError("Error retrieving Pets from database.");
         }
     }
 
@@ -46,9 +47,9 @@ public class PetController {
 
         try {
             petService.addPet(data.getData());
-            return getMap(Collections.singletonList(data.getData()));
+            return Util.getMap(Collections.singletonList(data.getData()));
         } catch (Exception e) {
-            return getModelMapError("Error while creating pet.");
+            return Util.getModelMapError("Error while creating pet.");
         }
     }
 
@@ -58,11 +59,11 @@ public class PetController {
         try {
             data.getData().setId(id);
             petService.updatePet(data.getData());
-            return getMap(Collections.singletonList(data.getData()));
+            return Util.getMap(Collections.singletonList(data.getData()));
 
         } catch (Exception e) {
 
-            return getModelMapError("Error while updating pet.");
+            return Util.getModelMapError("Error while updating pet.");
         }
     }
 
@@ -75,27 +76,8 @@ public class PetController {
             modelMap.put("success", true);
             return modelMap;
         } catch (Exception e) {
-            return getModelMapError("Error deleting pet.");
+            return Util.getModelMapError("Error deleting pet.");
         }
-    }
-
-    private Map<String, Object> getMap(List<Pet> pets) {
-
-        Map<String, Object> modelMap = new HashMap<String, Object>(3);
-        modelMap.put("total", pets.size());
-        modelMap.put("data", pets);
-        modelMap.put("success", true);
-
-        return modelMap;
-    }
-
-    private Map<String, Object> getModelMapError(String msg) {
-
-        Map<String, Object> modelMap = new HashMap<String, Object>(2);
-        modelMap.put("message", msg);
-        modelMap.put("success", false);
-
-        return modelMap;
     }
 
     @Autowired
