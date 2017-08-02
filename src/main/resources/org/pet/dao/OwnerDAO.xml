@@ -8,7 +8,9 @@
 
     <select id="selectOwner" parameterType="int" resultType="Owner">
         SELECT
-        *
+        ID,
+        NAME,
+        PHOTO_URL AS photoUrl
         FROM `OWNER`
         WHERE `OWNER`.ID = #{id};
     </select>
